@@ -1,0 +1,308 @@
+/* Dashboard Layout Styles */
+.dashboardContainer {
+    display: flex;
+    min-height: 100vh;
+    background-color: #0f1419;
+    color: #ffffff;
+}
+
+.dashboardContainer.light {
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    height: 100vh;
+    width: 260px;
+    background-color: #1a1f26;
+    border-right: 1px solid #2d3748;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.light {
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+}
+
+.mobileCloseButton {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: #8b92a7;
+    cursor: pointer;
+}
+
+.sidebar.light .mobileCloseButton {
+    color: #64748b;
+}
+
+.logo {
+    padding: 1.5rem;
+    border-bottom: 1px solid #2d3748;
+}
+
+.sidebar.light .logo {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.logoContent {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logoIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.logoText {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.sidebar.light .logoText {
+    color: #1e293b;
+}
+
+/* Navigation */
+.nav {
+    padding: 1.5rem 0.75rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #8b92a7;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.navLink:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+    color: #3b82f6;
+}
+
+.navLink.active {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}
+
+.sidebar.light .navLink {
+    color: #64748b;
+}
+
+.sidebar.light .navLink:hover {
+    background-color: #f1f5f9;
+    color: #3b82f6;
+}
+
+.navIcon {
+    font-size: 1.25rem;
+    width: 20px;
+    height: 20px;
+}
+
+/* Logout Button */
+.logoutSection {
+    padding: 1rem;
+    border-top: 1px solid #2d3748;
+}
+
+.sidebar.light .logoutSection {
+    border-top: 1px solid #e2e8f0;
+}
+
+.logoutButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logoutButton:hover {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Main Content */
+.mainContent {
+    flex: 1;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+}
+
+.mobileMenuButton {
+    display: none;
+    cursor: pointer;
+    color: #ffffff;
+    margin-right: 1rem;
+}
+
+.dashboardContainer.light .mobileMenuButton {
+    color: #1e293b;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+    backdrop-filter: blur(2px);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 50;
+        transition: transform 0.3s ease-in-out;
+        width: 280px;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .mobileCloseButton {
+        display: block;
+    }
+
+    .mainContent {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .mobileMenuButton {
+        display: block;
+    }
+
+    .overlay {
+        display: block;
+    }
+
+    .topBar {
+        padding: 1rem;
+    }
+
+    .pageContent {
+        padding: 1rem;
+    }
+}
+
+/* Top Bar */
+.topBar {
+    background-color: #1a1f26;
+    border-bottom: 1px solid #2d3748;
+    padding: 1rem 2rem;
+}
+
+.dashboardContainer.light .topBar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.topBarContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.welcomeSection h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+    color: #ffffff;
+}
+
+.dashboardContainer.light .welcomeSection h1 {
+    color: #1e293b;
+}
+
+.welcomeSection p {
+    font-size: 0.875rem;
+    color: #8b92a7;
+    margin: 0.25rem 0 0 0;
+}
+
+.dashboardContainer.light .welcomeSection p {
+    color: #64748b;
+}
+
+.topBarActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconButton {
+    padding: 0.5rem;
+    border-radius: 8px;
+    background-color: #0f1419;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboardContainer.light .iconButton {
+    background-color: #f1f5f9;
+}
+
+.iconButton:hover {
+    opacity: 0.8;
+}
+
+.userAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+/* Page Content */
+.pageContent {
+    padding: 1.25rem;
+}

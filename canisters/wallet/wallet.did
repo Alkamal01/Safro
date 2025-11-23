@@ -1,0 +1,75 @@
+type Principal = principal;
+type Satoshis = nat64;
+type Timestamp = nat64;
+
+type WalletBalance = record {
+    user_id: Principal;
+    btc_balance: Satoshis;
+    ckbtc_balance: Satoshis;
+    pending_deposits: Satoshis;
+    pending_withdrawals: Satoshis;
+    last_updated: Timestamp;
+};
+
+type DepositAddress = record {
+    user_id: Principal;
+    address: text;
+    currency: text;
+    created_at: Timestamp;
+};
+
+type Transaction = record {
+    tx_id: text;
+    user_id: Principal;
+    tx_type: text; // "deposit", "withdrawal", "transfer", "escrow"
+    amount: Satoshis;
+    currency: text;
+    status: text; // "pending", "confirmed", "failed"
+    created_at: Timestamp;
+    confirmed_at: opt Timestamp;
+};
+
+type TransferParams = record {
+    to: Principal;
+    amount: Satoshis;
+    currency: text;
+};
+
+type WalletError = variant {
+    InsufficientBalance;
+    InvalidAddress;
+    InvalidAmount;
+    TransferFailed: text;
+    NotFound;
+    Unauthorized;
+};
+
+type Result = variant {
+    Ok: WalletBalance;
+    Err: WalletError;
+};
+
+type AddressResult = variant {
+    Ok: DepositAddress;
+    Err: WalletError;
+};
+
+service : {
+    // Balance operations
+    get_balance: (Principal) -> (opt WalletBalance) query;
+    get_my_balance: () -> (opt WalletBalance) query;
+    
+    // Address management
+    get_deposit_address: (text) -> (AddressResult);
+    get_my_addresses: () -> (vec DepositAddress) query;
+    
+    // Transfers
+    transfer: (TransferParams) -> (Result);
+    
+    // Transactions
+    get_transactions: (Principal) -> (vec Transaction) query;
+    get_my_transactions: () -> (vec Transaction) query;
+    
+    // Admin operations (update balances from confirmed deposits)
+    update_balance: (Principal, nat64, text) -> (Result);
+}

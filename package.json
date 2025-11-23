@@ -1,0 +1,27 @@
+{
+  "name": "safro",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "shared/types"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:services\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:services": "docker-compose up -d",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "canister:local": "dfx start --background && dfx deploy",
+    "canister:stop": "dfx stop",
+    "test": "npm run test:frontend",
+    "test:frontend": "cd frontend && npm test",
+    "lint": "npm run lint:frontend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "clean": "npm run clean:frontend && dfx canister uninstall-code --all || true",
+    "clean:frontend": "cd frontend && rm -rf .next node_modules"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

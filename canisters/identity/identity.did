@@ -1,0 +1,57 @@
+type Principal = principal;
+type Timestamp = nat64;
+
+type UserProfile = record {
+    principal_id: Principal;
+    username: opt text;
+    phone_number: opt text;
+    email: opt text;
+    avatar_url: opt text;
+    bio: opt text;
+    kyc_level: nat8; // 0=none, 1=basic, 2=verified, 3=premium
+    is_agent: bool;
+    badges: vec text;
+    created_at: Timestamp;
+    updated_at: Timestamp;
+};
+
+type UpdateProfileParams = record {
+    username: opt text;
+    phone_number: opt text;
+    email: opt text;
+    avatar_url: opt text;
+    bio: opt text;
+};
+
+type ProfileError = variant {
+    NotFound;
+    Unauthorized;
+    UsernameAlreadyTaken;
+    InvalidInput: text;
+};
+
+type Result = variant {
+    Ok: UserProfile;
+    Err: ProfileError;
+};
+
+service : {
+    // Profile management
+    create_profile: () -> (Result);
+    get_profile: (Principal) -> (opt UserProfile) query;
+    get_my_profile: () -> (opt UserProfile) query;
+    update_profile: (UpdateProfileParams) -> (Result);
+    
+    // KYC
+    update_kyc_level: (Principal, nat8) -> (Result);
+    
+    // Agent status
+    set_agent_status: (Principal, bool) -> (Result);
+    get_agents: () -> (vec UserProfile) query;
+    
+    // Search
+    search_by_username: (text) -> (opt UserProfile) query;
+    
+    // Statistics
+    get_total_users: () -> (nat64) query;
+}

@@ -1,0 +1,102 @@
+type EscrowId = text;
+type Principal = principal;
+type Satoshis = nat64;
+type Timestamp = nat64;
+
+type Currency = variant {
+    BTC;
+    CkBTC;
+};
+
+type EscrowStatus = variant {
+    Created;
+    Funded;
+    Delivered;
+    Released;
+    Refunded;
+    Disputed;
+};
+
+type UTXO = record {
+    txid: text;
+    vout: nat32;
+    amount_satoshis: Satoshis;
+    confirmations: nat32;
+};
+
+type EscrowRecord = record {
+    escrow_id: EscrowId;
+    creator_id: Principal;
+    counterparty_id: Principal;
+    amount_satoshis: Satoshis;
+    currency: Currency;
+    deposit_address: text;
+    utxos: vec UTXO;
+    status: EscrowStatus;
+    time_lock_unix: opt Timestamp;
+    created_at: Timestamp;
+    updated_at: Timestamp;
+    ai_risk_score: opt nat8;
+    tags: vec text;
+    creator_confirmed_delivery: bool;
+    counterparty_confirmed_delivery: bool;
+};
+
+type CreateEscrowParams = record {
+    counterparty_id: Principal;
+    amount_satoshis: Satoshis;
+    currency: Currency;
+    time_lock_unix: opt Timestamp;
+};
+
+type CreateEscrowResult = record {
+    escrow_id: EscrowId;
+    deposit_address: text;
+};
+
+type EscrowError = variant {
+    NotFound;
+    Unauthorized;
+    InvalidStatus;
+    InsufficientFunds;
+    TimeLockNotExpired;
+    AlreadyConfirmed;
+    InvalidAmount;
+    InternalError: text;
+};
+
+type Result = variant {
+    Ok: EscrowRecord;
+    Err: EscrowError;
+};
+
+type CreateResult = variant {
+    Ok: CreateEscrowResult;
+    Err: EscrowError;
+};
+
+service : {
+    // Core escrow operations
+    create_escrow: (CreateEscrowParams) -> (CreateResult);
+    get_escrow: (EscrowId) -> (opt EscrowRecord) query;
+    get_user_escrows: (Principal) -> (vec EscrowRecord) query;
+    
+    // Funding operations
+    notify_deposit: (EscrowId, UTXO) -> (Result);
+    
+    // Release and refund
+    confirm_delivery: (EscrowId) -> (Result);
+    request_release: (EscrowId) -> (Result);
+    force_refund: (EscrowId, text) -> (Result);
+    
+    // Dispute
+    mark_disputed: (EscrowId, text) -> (Result);
+    resolve_dispute: (EscrowId, text) -> (Result);
+    
+    // AI integration
+    attach_ai_result: (EscrowId, nat8, vec text) -> (Result);
+    
+    // Stats
+    get_total_escrows: () -> (nat64) query;
+    get_escrows_by_status: (EscrowStatus) -> (vec EscrowRecord) query;
+}

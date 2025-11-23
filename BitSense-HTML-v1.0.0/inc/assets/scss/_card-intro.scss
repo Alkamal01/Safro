@@ -1,0 +1,79 @@
+.product-section {
+    padding: 10rem 0;
+    .heading {
+        text-align: center;
+    }
+    .product-block-wrapper {
+        padding: 5rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 8rem;
+        @media (max-width: 991px) {
+            padding: 3rem;
+        }
+        @media (max-width: 991px) {
+            padding: 2rem;
+        }
+        .product-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            justify-items: center;
+            @media (max-width: 991px) {
+                grid-template-columns: 1fr;
+                 // Reverse odd cards
+            &:nth-child(odd) {
+                .content-block {
+                    order: 2;
+                }
+                .image-block {
+                    order: 1;
+                }
+            }
+            }
+            .content-block {
+                .title {
+                    font-size: var(--title-lg-font-size);
+                    line-height: 50px;
+                }
+                p {
+                    margin-top: 3rem;
+                    font-size: var(--btn-font-size);
+                    letter-spacing: 0;
+                }
+                @media (max-width: 991px) {
+                    text-align: center;
+                    
+                }
+            }
+            .image-block {
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    object-fit: cover;
+                }
+                .darkmode-image{
+                    display: none;
+                }
+            }
+        }
+       
+    }
+}
+body.dark-mode{
+    .product-section {
+        .product-block-wrapper {
+            .product-card {
+                .image-block {
+                    .lightmode-image {
+                        display: none;
+                    }
+                    .darkmode-image{
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}

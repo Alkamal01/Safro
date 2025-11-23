@@ -1,0 +1,51 @@
+type Principal = principal;
+type Timestamp = nat64;
+
+type ReputationProfile = record {
+    user_id: Principal;
+    completed_deals: nat64;
+    dispute_count: nat64;
+    avg_response_time_seconds: nat64;
+    trust_score: nat8; // 0-100
+    badges: vec text;
+    last_update: Timestamp;
+};
+
+type DisputeRecord = record {
+    dispute_id: text;
+    escrow_id: text;
+    user_id: Principal;
+    dispute_type: text;
+    resolution: text;
+    created_at: Timestamp;
+    resolved_at: opt Timestamp;
+};
+
+type ReputationError = variant {
+    NotFound;
+    Unauthorized;
+    InvalidScore;
+};
+
+type Result = variant {
+    Ok: ReputationProfile;
+    Err: ReputationError;
+};
+
+service : {
+    // Query reputation
+    get_reputation: (Principal) -> (opt ReputationProfile) query;
+    get_my_reputation: () -> (opt ReputationProfile) query;
+    
+    // Update reputation (called by other canisters)
+    record_completed_deal: (Principal, nat64) -> (Result);
+    record_dispute: (Principal, text, text) -> (Result);
+    resolve_dispute: (text, text) -> (Result);
+    
+    // Badges
+    award_badge: (Principal, text) -> (Result);
+    
+    // Statistics
+    get_top_users: (nat64) -> (vec ReputationProfile) query;
+    get_dispute_history: (Principal) -> (vec DisputeRecord) query;
+}

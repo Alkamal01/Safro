@@ -1,0 +1,37 @@
+type EscrowId = text;
+type Timestamp = nat64;
+
+type AIResult = record {
+    escrow_id: EscrowId;
+    risk_score: nat8; // 0-100
+    risk_reasons: vec text;
+    recommended_action: text; // "ALLOW", "FLAG", "MANUAL_REVIEW"
+    generated_at: Timestamp;
+    model_version: text;
+    signature: text;
+};
+
+type AIError = variant {
+    NotFound;
+    Unauthorized;
+    InvalidSignature;
+    AlreadyProcessed;
+};
+
+type Result = variant {
+    Ok: AIResult;
+    Err: AIError;
+};
+
+service : {
+    // Store AI assessment results
+    store_ai_result: (AIResult) -> (Result);
+    
+    // Query AI results
+    get_ai_result: (EscrowId) -> (opt AIResult) query;
+    get_results_by_score_range: (nat8, nat8) -> (vec AIResult) query;
+    
+    // Statistics
+    get_total_assessments: () -> (nat64) query;
+    get_avg_risk_score: () -> (nat8) query;
+}

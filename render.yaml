@@ -1,0 +1,44 @@
+services:
+  # API Gateway Service
+  - type: web
+    name: safro-api-gateway
+    runtime: rust
+    repo: https://github.com/YOUR_USERNAME/Safro
+    rootDir: services/api-gateway
+    buildCommand: cargo build --release
+    startCommand: ./target/release/api-gateway
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: safro-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RUST_LOG
+        value: info
+      - key: PORT
+        value: 8080
+    healthCheckPath: /health
+
+  # AI Gateway Service
+  - type: web
+    name: safro-ai-gateway
+    runtime: rust
+    repo: https://github.com/YOUR_USERNAME/Safro
+    rootDir: services/ai-gateway
+    buildCommand: cargo build --release
+    startCommand: ./target/release/ai-gateway
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false  # You'll need to set this manually
+      - key: RUST_LOG
+        value: info
+      - key: PORT
+        value: 8081
+    healthCheckPath: /health
+
+databases:
+  # PostgreSQL Database for API Gateway
+  - name: safro-db
+    databaseName: safro
+    user: safro_user

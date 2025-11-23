@@ -1,0 +1,598 @@
+/* Dashboard Overview Page Styles - Compact & Minimal */
+
+/* Promotional Banner */
+.promoBanner {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.25rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.promoContent h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+}
+
+.promoContent p {
+    margin: 0 0 0.75rem 0;
+    opacity: 0.9;
+    font-size: 0.875rem;
+}
+
+.promoButton {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+}
+
+.promoButton:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.promoIcons {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 2rem;
+}
+
+/* Stats Cards - Compact */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.statCard {
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.statCardGradient {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.statCardDark {
+    background-color: #1a1f26;
+    border: 1px solid #2d3748;
+    color: white;
+}
+
+.statCardLight {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+}
+
+.statCardDecoration {
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.statHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.statIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.statLabel {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 0.25rem 0;
+}
+
+.statSubtext {
+    font-size: 0.75rem;
+    opacity: 0.75;
+}
+
+/* Main Content Grid - Compact */
+.contentGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+/* Chart Section - Compact */
+.chartSection {
+    background-color: #1a1f26;
+    border: 1px solid #2d3748;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.chartSection.light {
+    background-color: white;
+    border-color: #e2e8f0;
+}
+
+.chartHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.chartTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.chartSection.light .chartTitle {
+    color: #1e293b;
+}
+
+.chartTabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.chartTab {
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    border: none;
+    color: #8b92a7;
+    font-size: 0.8125rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.chartTab.active {
+    color: white;
+}
+
+.chartSection.light .chartTab.active {
+    color: #1e293b;
+}
+
+.timeFilters {
+    display: flex;
+    gap: 0.375rem;
+}
+
+.timeButton {
+    padding: 0.375rem 0.625rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.timeButton.active {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.timeButton:not(.active) {
+    background-color: #0f1419;
+    color: #8b92a7;
+}
+
+.chartSection.light .timeButton:not(.active) {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
+
+.chartPlaceholder {
+    height: 14rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f1419;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.chartSection.light .chartPlaceholder {
+    background-color: #f8fafc;
+}
+
+.chartPlaceholderIcon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.chartPlaceholderText {
+    color: #8b92a7;
+    font-size: 0.8125rem;
+}
+
+.chartSection.light .chartPlaceholderText {
+    color: #64748b;
+}
+
+/* Quick Actions - Compact */
+.quickActions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.actionButton {
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.actionButtonPrimary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.actionButtonPrimary:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.actionButtonSecondary {
+    background-color: #1a1f26;
+    border: 1px solid #2d3748;
+    color: white;
+}
+
+.actionButtonSecondary.light {
+    background-color: white;
+    border-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.actionButtonSecondary:hover {
+    background-color: #2d3748;
+}
+
+/* Balance Card - Compact */
+.balanceCard {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    padding: 1.25rem;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+}
+
+.balanceAvatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+}
+
+.balanceLabel {
+    font-size: 0.8125rem;
+    opacity: 0.9;
+    margin-bottom: 0.375rem;
+}
+
+.balanceAmount {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.375rem 0;
+}
+
+.balanceChange {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.balanceBadge {
+    background-color: #10b981;
+    padding: 0.2rem 0.625rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.balanceActions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.balanceActionButton {
+    flex: 1;
+    padding: 0.625rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.8125rem;
+}
+
+.balanceActionButton.primary {
+    background-color: white;
+    color: #3b82f6;
+}
+
+.balanceActionButton.primary:hover {
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.balanceActionButton.secondary {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.balanceActionButton.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Trading Panel */
+.tradingPanel {
+    background-color: #1a1f26;
+    border: 1px solid #2d3748;
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+}
+
+.tradingPanel.light {
+    background-color: white;
+    border-color: #e2e8f0;
+}
+
+.formGroup {
+    margin-bottom: 1.25rem;
+}
+
+.formLabel {
+    display: block;
+    font-size: 0.875rem;
+    color: #8b92a7;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.tradingPanel.light .formLabel {
+    color: #64748b;
+}
+
+.coinSelector {
+    background-color: #0f1419;
+    padding: 0.875rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #2d3748;
+}
+
+.coinSelector:hover {
+    border-color: #3b82f6;
+}
+
+.tradingPanel.light .coinSelector {
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.coinInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.coinIcon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.coinName {
+    color: white;
+    font-weight: 600;
+}
+
+.tradingPanel.light .coinName {
+    color: #1e293b;
+}
+
+.coinSymbol {
+    font-size: 0.75rem;
+    color: #8b92a7;
+}
+
+.tradingPanel.light .coinSymbol {
+    color: #64748b;
+}
+
+.inputWrapper {
+    background-color: #0f1419;
+    padding: 0.875rem;
+    border-radius: 8px;
+    border: 1px solid #2d3748;
+}
+
+.tradingPanel.light .inputWrapper {
+    background-color: #f8fafc;
+    border-color: #e2e8f0;
+}
+
+.input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.tradingPanel.light .input {
+    color: #1e293b;
+}
+
+.input::placeholder {
+    color: #8b92a7;
+}
+
+.inputSubtext {
+    font-size: 0.75rem;
+    color: #8b92a7;
+    margin-top: 0.25rem;
+}
+
+.tradingPanel.light .inputSubtext {
+    color: #64748b;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    padding-top: 0.5rem;
+}
+
+.totalLabel {
+    color: #8b92a7;
+    font-weight: 500;
+}
+
+.tradingPanel.light .totalLabel {
+    color: #64748b;
+}
+
+.totalValue {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.tradingPanel.light .totalValue {
+    color: #1e293b;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    font-weight: 600;
+
+    .submitButton:hover {
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .promoBanner {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .promoContent {
+            margin-bottom: 1rem;
+        }
+
+        .promoIcons {
+            justify-content: center;
+        }
+
+        .statsGrid {
+            grid-template-columns: 1fr;
+        }
+
+        .chartHeader {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .timeFilters {
+            width: 100%;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+
+        .timeButton {
+            flex: 1;
+            text-align: center;
+        }
+
+        .quickActions {
+            grid-template-columns: 1fr;
+        }
+
+        .totalRow {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+}

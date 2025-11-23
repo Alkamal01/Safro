@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+:root{
+    //Font Sizes
+    --heading-font-size: 5rem;
+    --sub-heading-font-size: 3.2rem;
+    --title-lg-font-size: 3rem;
+    --title-font-size: 2.4rem;
+    --title-sm-font-size: 2rem;
+    --btn-font-size: 1.8rem;
+    --paragraph-font-size: 1.6rem;
+    --small-font-size: 1.4rem;
+    --x-small-font-size: 1.2rem;
+    --xx-small-font-size: 1.0rem;
+
+    //colors
+    --light-primary-color: #c2dcfb;
+    --primary-color: #3387ee;
+    --primary-color-2: #6ca8f2;
+     --primary-color-3: #add0fb;
+    --secondary-color: #292c30;
+    --secondary-color-2: #24272b;
+    --tertiary-color : #757b86;
+    --tertiary-color-2 : #8d949f;
+    --tertiary-color-3 : #979daa;
+    --primary-white: #ffffff;
+    --main-white: #ffffff;
+    --title-color: #333333;
+    --primary-gray: #f3f7fb;
+    --main-gray: #ebf0f4;
+    --primary-light-gray: #ebf0f4;
+    --primary-light-gray-2: #c1c9d6;
+    --primary-light-gray-3: #d8dcdf;
+    --bg-black-transparent: rgba(0, 0, 0, 0.7);
+      --col-particle: #3387ee;
+  --col-particle-stroke: #3387ee;
+  --col-particle-stroke-hover: #3387ee;
+
+    //Fonts
+    --nunito-font-family: 'Nunito Sans', sans-serif;
+    --encode-font-family: 'Encode Sans', sans-serif;    
+    --opensans-font-family: 'Open Sans', sans-serif;
+
+    //border-radius
+    --border-radius: 0.4rem;
+}
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    // @media (max-width: 1200px) {
+    //     font-size: 56.25%;
+    // }
+    // @media (max-width: 991px) {
+    //     font-size: 50%;
+    // }
+}
+body {
+    line-height: 1;
+    overflow-x: hidden;
+    background-color: var(--primary-white);
+    scroll-behavior: smooth;
+    transition: background-color 0.2s linear;
+}
+body.dark-mode {
+    --primary-color: #3387ee;
+    --secondary-color: #ffffff;
+    --secondary-color-2: #24272b;
+    --tertiary-color : #757b86;
+    --tertiary-color-2 : #8d949f;
+    --tertiary-color-3 : #979daa;
+    --title-color: #ffffff;
+    --main-white: #ffffff;
+    --primary-white: #24262a;
+    --primary-gray: #292c30;
+    --primary-gray-2: #202125;
+    --primary-light-gray: #3f4245;
+    --primary-light-gray-2: #4c525b;
+    --primary-light-gray-3: #3f4245;
+}
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    @media (max-width:991px) {
+    padding: 0 25px;
+}
+}
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: var(--primary-color);
+}
+// Scrollbar Styling End
+// Scroll to Top Button
+.scrollToTopBtn {
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50%;
+    fill: var(--main-white);
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all .5s ease;
+}
+
+.scrollToTopBtn svg {
+    height: 30px;
+    width: 30px
+}
+
+.showBtn {
+    opacity: 1;
+    transform: translateY(0)
+}
+
+@keyframes customFadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+.custom-fadeInUp {
+    animation-name: customFadeInUp;
+}
+
+@keyframes fadeInLeftSmall {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.fadeInLeftSmall {
+    animation: fadeInLeftSmall 1s ease forwards;
+}
+
+@keyframes fadeInRightSmall {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.fadeInRightSmall {
+    animation: fadeInRightSmall 1s ease forwards;
+}
+
+
+
+@import 'heading';
+@import 'services';
+@import 'button';
+@import 'news';
+@import 'choose-us';
+@import 'team';
+@import 'card-intro';
+@import 'faqs';
+@import 'footer';
+@import 'commitment';
+@import 'page-header';
+@import 'about-1';
+@import 'about-2';
+@import 'how-to-use';
+@import 'features';
+@import 'cta';
+@import 'hero';
+@import 'growth-roadmap';
+@import 'gallery';
+@import 'team-detail';
+@import 'services-detail';
+@import 'feedback';
+@import 'contact-form';
+@import 'contact';
+@import 'event';
+@import 'navigation';
+@import 'hamburger';
+@import 'statistics';
+@import 'calculator';

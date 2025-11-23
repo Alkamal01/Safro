@@ -1,0 +1,269 @@
+Safro — Software Architecture (Detailed Spec)
+1 — High-level overview
+
+Safro is composed of three trust domains:
+
+On-chain / Canister layer (ICP) — Escrow, wallet coordination, reputation storage, threshold signing orchestration. Implemented as Rust canisters.
+
+Off-chain backend services — AI gateway, USSD & VAS gateway, notification service, agent/cash-out management, reconciliation. Implemented in Rust (recommended) or TypeScript for rapid parts.
+
+Client layer — Next.js (TypeScript) web + PWA mobile UI, and USSD menus through aggregator.
+
+Data persistence: minimal canonical state lives in canisters; larger non-sensitive data and caches live in PostgreSQL + Redis; event stream via NATS/Kafka.
+
+2 — Components & Responsibilities
+A. ICP Canister Layer (Rust canisters)
+
+Goal: Keep all critical money logic on-chain or controlled by canisters.
+
+Escrow Canister
+
+Create escrow records (metadata, participants, amounts, time-locks, conditions).
+
+Issue/return deposit addresses (via threshold key derivation).
+
+Track funding status (UTXO references or ckBTC ledger events).
+
+Execute release/refund flows (on confirmation, time-lock expiry, or arbitration).
+
+Emit events for off-chain services (via ICP events / HTTP outcalls).
+
+Wallet Coordination Canister
+
+Map user → on-chain wallet states (addresses, ckBTC balances, UTXO pointers).
+
+Perform accounting ledger for user balances (mirrors on-chain state + local cache).
+
+Manage internal transfers (ckBTC fast transfers).
+
+Coordinate cross-chain settlement via Chain Fusion module.
+
+Reputation & Credit Canister
+
+Store immutable reputation records, dispute history, repayment proofs.
+
+Expose read APIs for trust score computation and UI.
+
+Store non-sensitive aggregates locally; store proofs & signed statements on-chain.
+
+AI Orchestration Canister
+
+Minimal on-chain interface that receives AI results (risk score, summaries) and stores them as canister trust attributes for deals.
+
+Does not call AI directly — uses a secure off-chain AI Gateway to preserve external key secrecy.
+
+Identity / Profile Canister
+
+Public profile data, badges, KYC level flag (if used).
+
+Link to off-chain metadata (phone number, agent id) but store only pointers.
+
+Interfaces (all canisters expose typed candid APIs):
+
+create_escrow(params) -> escrow_id
+
+get_escrow(escrow_id) -> EscrowRecord
+
+notify_deposit(escrow_id, utxo_info)
+
+request_release(escrow_id, actor, signature)
+
+force_refund(escrow_id, reason)
+
+get_reputation(user_id) -> ReputationProfile
+
+attach_ai_result(escrow_id, ai_result)
+
+B. Off-chain Services
+
+AI Gateway (secure server)
+
+Receives structured deal + on-chain metadata.
+
+Calls OpenAI/Groq with curated prompts.
+
+Returns:
+
+risk_score (0–100)
+
+risk_tags (e.g., “fast-payer”, “chargeback_risk”)
+
+dispute_summary (text)
+
+recommendation (enum: allow/flag/manual_review)
+
+Auth & encryption: API keys stored in Vault, comms over TLS with signed payloads to canister.
+
+API Gateway / App Backend (Rust - Axum)
+
+REST/gRPC endpoints for frontend and USSD middleware.
+
+Auth: JWT / session tokens; sign sensitive requests with client keys that can trigger canister calls.
+
+Proxy to canisters using IC agent libraries (auth as per canister access control).
+
+Handles webhooks and aggregator callbacks.
+
+USSD & VAS Gateway
+
+Integrates with aggregators ( Termii / Hubtel).
+
+USSD session engine (stateful in Redis).
+
+VAS integration adapters (VTU.ng, Reloadly) with retry & reconciliation logic.
+
+Provides translation to/from canister operations (Create Escrow, Release)
+
+Notification Service
+
+Event consumer (NATS/Kafka) listens for escrow events and sends SMS/WhatsApp/email/push.
+
+Provider adapters:Termii, SendChamp.
+
+Agent / Cash-Out Service
+
+Manages registered agents’ balances, KYC status, cash float.
+
+Coordinates agent payouts: upon on-chain confirmation, notifies agent to release cash.
+
+Reconciliation: agent reports, receipts uploaded, matched to on-chain events.
+
+Reconciliation & Monitoring Service
+
+Periodic jobs reconcile canister events (UTXOs, ckBTC ledger) with DB ledger.
+
+Detects discrepancies and flags for manual investigation.
+
+Event Bus (NATS / Kafka)
+
+All services publish/subscribe to events: escrow.created, escrow.funded, escrow.released, ai.risk_scored, vas.confirmed, agent.payout.
+
+C. Client Layer
+
+Next.js App (TypeScript)
+
+App Router, server components for SEO/SSR where needed.
+
+Uses ICP Agent wrapper to call canister APIs for read/write actions (via backend when necessary).
+
+Pages: Dashboard, Create Escrow, Escrow Detail, Wallet, Reputation, VAS, Agents, Admin.
+
+Local caching via React Query; state management with Zustand.
+
+Mobile PWA
+
+Same codebase with responsive UI and PWA features for offline caching, push.
+
+USSD Client
+
+Menu flows defined in USSD Gateway; minimal feature set for phones.
+
+3 — Data Models (canonical types)
+EscrowRecord
+{
+  escrow_id: string;
+  creator_id: string;
+  counterparty_id: string;
+  amount_satoshis: number;
+  currency: 'BTC' | 'ckBTC';
+  deposit_address: string;     // generated by custodian canister
+  utxos: UTXO[];               // list of utxo refs
+  status: 'CREATED' | 'FUNDED' | 'DELIVERED' | 'RELEASED' | 'REFUNDED' | 'DISPUTED';
+  time_lock_unix?: number;
+  created_at: unix;
+  updated_at: unix;
+  ai_risk_score?: number;
+  tags?: string[];
+}
+ReputationProfile
+{
+  user_id: string;
+  completed_deals: number;
+  dispute_count: number;
+  avg_response_time_seconds: number;
+  trust_score: number; // 0-100
+  badges: string[];
+  last_update: unix;
+}
+AIResult
+{
+  escrow_id: string;
+  risk_score: number;
+  risk_reasons: string[]; // brief reasons
+  recommended_action: 'ALLOW' | 'FLAG' | 'MANUAL_REVIEW';
+  generated_at: unix;
+  model_version: string;
+  signature: string; // HMAC or signed payload for verification
+}
+4 — Sequences & Flows (core)
+Flow A — Create & Fund Escrow
+
+Frontend calls API POST /escrows → creates escrow and calls Escrow Canister.create_escrow().
+
+Escrow canister generates deposit address (via threshold signing module) and returns to client.
+
+UI displays deposit address + QR. Buyer deposits BTC to that address.
+
+Wallet Canister (or off-chain watcher) watches for UTXO confirmations and notifies Escrow Canister (notify_deposit).
+
+Escrow status moves to FUNDED. Event published: escrow.funded.
+
+API publishes event and AI Gateway is triggered to compute risk.
+
+Flow B — Release Payment
+
+Buyer confirms delivery in UI → POST /escrows/{id}/release_request.
+
+Backend validates, calls Escrow Canister.request_release().
+
+If consensus rules satisfied (both confirm or time-lock or oracle), canister signs transaction using threshold signatures and broadcasts it.
+
+On-chain broadcast confirmed → status RELEASED. Event published.
+
+Reputation Canister updates both users.
+
+Flow C — Dispute
+
+Either party triggers dispute → Escrow Canister.mark_disputed().
+
+Event escrow.disputed to NATS.
+
+Dispute Assistant calls AI Gateway with structured deal data → returns dispute_summary + recommended resolution.
+
+Admin/agent reviews; canister release/refund executed accordingly.
+
+5 — Security Model & Key Management
+
+Threshold signature module runs inside canisters, split across multiple canisters/nodes per ICP best practices — private signing keys never leave canister boundary.
+
+Secrets for AI API keys stored in HashiCorp Vault (or DFINITY secret manager) — only AI Gateway reads them.
+
+HTTPS & Mutual TLS between off-chain services and AI Gateway where possible.
+
+Auditing: every canister state change writes a signed event to an append-only feed; off-chain reconciliation verifies logs.
+
+Auth: Use strong session tokens, optional device-bound OTP for sensitive actions (release/refund).
+
+Data encryption: sensitive PII in Postgres encrypted at rest. On-chain data minimized to public/consentable info.
+
+6 — Persistence & Backups
+
+Postgres with PITR & daily snapshots.
+
+Regular export of canister state (via snapshots) and archiving.
+
+Redis persistent snapshotting for session continuity (but not authoritative).
+
+Event stream retention policy for audit logs (keep longer retention for escrow events).
+
+7 — Observability & Ops
+
+Logging: structured JSON logs (stdout) aggregated to ELK/Datadog.
+
+Metrics: Prometheus metrics for request rate, canister calls, escrow flows, AI latency, VAS success rate.
+
+Tracing: OpenTelemetry across services for request tracing.
+
+Alerts: High-value events: stuck escrows > X hours, failed recon jobs, mismatched balances.
+
+SLA: Set canister execution timeouts & retries with circuit breakers.

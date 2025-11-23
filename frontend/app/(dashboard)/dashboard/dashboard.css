@@ -1,0 +1,26 @@
+/* Dashboard-specific styles - Dark theme only */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force dark theme with plain CSS */
+html,
+body {
+    background-color: #0f1419;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Ensure proper font rendering */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

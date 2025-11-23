@@ -1,0 +1,47 @@
+[workspace]
+members = [
+    "canisters/escrow",
+    "canisters/wallet",
+    "canisters/reputation",
+    "canisters/ai_orchestration",
+    "canisters/identity",
+    "services/api-gateway",
+    "services/ai-gateway",
+]
+
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Safro Team"]
+
+[workspace.dependencies]
+# Common dependencies for all workspace members
+candid = "0.10"
+ic-cdk = "0.13"
+ic-cdk-macros = "0.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-native-tls", "migrate"] }
+redis = { version = "0.24", features = ["tokio-comp", "connection-manager"] }
+async-nats = "0.33"
+reqwest = { version = "0.11", features = ["json"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+anyhow = "1.0"
+thiserror = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["serde", "v4"] }
+jsonwebtoken = "9.0"
+bcrypt = "0.15"
+dotenv = "0.15"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

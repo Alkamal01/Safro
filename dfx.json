@@ -1,0 +1,72 @@
+{
+    "version": 1,
+    "canisters": {
+        "escrow": {
+            "type": "rust",
+            "candid": "canisters/escrow/escrow.did",
+            "package": "escrow",
+            "build": [
+                "cargo build --target wasm32-unknown-unknown --release --package escrow"
+            ]
+        },
+        "wallet": {
+            "type": "rust",
+            "candid": "canisters/wallet/wallet.did",
+            "package": "wallet",
+            "build": [
+                "cargo build --target wasm32-unknown-unknown --release --package wallet"
+            ]
+        },
+        "reputation": {
+            "type": "rust",
+            "candid": "canisters/reputation/reputation.did",
+            "package": "reputation",
+            "build": [
+                "cargo build --target wasm32-unknown-unknown --release --package reputation"
+            ]
+        },
+        "ai_orchestration": {
+            "type": "rust",
+            "candid": "canisters/ai_orchestration/ai_orchestration.did",
+            "package": "ai_orchestration",
+            "build": [
+                "cargo build --target wasm32-unknown-unknown --release --package ai_orchestration"
+            ]
+        },
+        "identity": {
+            "type": "rust",
+            "candid": "canisters/identity/identity.did",
+            "package": "identity",
+            "build": [
+                "cargo build --target wasm32-unknown-unknown --release --package identity"
+            ]
+        },
+        "frontend": {
+            "type": "assets",
+            "source": [
+                "frontend/out"
+            ]
+        }
+    },
+    "defaults": {
+        "build": {
+            "args": "",
+            "packtool": ""
+        },
+        "replica": {
+            "subnet_type": "system"
+        }
+    },
+    "networks": {
+        "local": {
+            "bind": "127.0.0.1:4943",
+            "type": "ephemeral"
+        },
+        "ic": {
+            "providers": [
+                "https://icp-api.io"
+            ],
+            "type": "persistent"
+        }
+    }
+}

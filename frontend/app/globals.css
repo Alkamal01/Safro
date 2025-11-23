@@ -1,0 +1,306 @@
+/* Import BitSense Template Styles */
+@import url('../public/template-assets/css/style.css');
+@import url('../public/template-assets/css/swiper-bundle.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+/* Keep Tailwind for utility classes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Override template container to work with Next.js */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Ensure images work with Next.js Image component */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fix for sticky header in Next.js */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background, #1a1a1a);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary, #3b82f6);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover, #2563eb);
+}
+
+/* Success and error messages */
+.error {
+  color: #ef4444;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.success {
+  color: #10b981;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Override template accordion CSS to ensure answers are visible */
+.faqs-section .accordion .react-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faqs-section .accordion .react-accordion-content.show {
+  display: block !important;
+  max-height: 1000px !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Single navbar layout */
+.header-wrapper.single-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 0.75rem 0 !important;
+  /* Reduced padding for compact navbar */
+}
+
+/* Make header more compact */
+.header .container {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+/* Reduce logo wrapper padding */
+.header-logo-wrapper {
+  padding: 0 !important;
+}
+
+/* Reduce navigation menu padding */
+.navigation-menu.desktop.centered {
+  padding: 0 !important;
+}
+
+/* Reduce button block padding */
+.nav-btn-block {
+  padding: 0 !important;
+  gap: 1rem;
+}
+
+/* Remove extra spacing from header */
+.header,
+header.header,
+header.sticky-nav {
+  margin: 0 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.header .container,
+header .container {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.header-wrapper,
+.header-wrapper.single-navbar {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Hide the second navbar row completely */
+.header-menu-wrapper {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+}
+
+/* Remove any spacing after header */
+header+* {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Reduce hero section padding to shift content up */
+.hero-2-section {
+  padding-top: 10rem !important;
+  padding-bottom: 4rem !important;
+}
+
+.hero-2-section .hero-content-wrapper {
+  padding-top: 2rem !important;
+}
+
+.navigation-menu.desktop.centered {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0 !important;
+  list-style: none;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .desktop-only {
+    display: flex;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  /* Hide hamburger menu on desktop */
+  .hamburger.direction-right.mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* Auth Form Overrides - High Specificity */
+#safro-auth-form-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.5rem !important;
+  max-width: 500px !important;
+  margin: 0 auto !important;
+}
+
+#safro-auth-form-container .safro-input-group {
+  display: block !important;
+  position: relative !important;
+  height: auto !important;
+  min-height: 80px !important;
+  /* Increased height to be safe */
+  width: 100% !important;
+  margin-bottom: 1.5rem !important;
+  overflow: visible !important;
+  z-index: 1 !important;
+}
+
+#safro-auth-form-container input {
+  display: block !important;
+  width: 100% !important;
+  height: 60px !important;
+  /* Explicit height */
+  padding: 0 2rem !important;
+  border-radius: 50px !important;
+  border: none !important;
+  outline: none !important;
+  background-color: var(--primary-white) !important;
+  color: var(--tertiary-color) !important;
+  font-size: 1rem !important;
+  /* Reset font size */
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+/* Auth Form Overrides */
+/* Auth Form Overrides */
+.contact-form-section .contact-form .auth-form-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  /* gap: 1.5rem !important; Removed gap to rely on margins */
+  max-width: 500px !important;
+  margin: 0 auto !important;
+}
+
+.contact-form-section .contact-form .auth-form-wrapper .input-group {
+  display: block !important;
+  position: relative !important;
+  height: auto !important;
+  min-height: 70px !important;
+  /* Force height */
+  width: 100% !important;
+  margin-bottom: 2rem !important;
+  overflow: visible !important;
+  z-index: 1 !important;
+}
+
+/* Fix checkbox alignment */
+.checkbox-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+  padding: 0 !important;
+  border-radius: 4px !important;
+}
+
+/* Fix text alignment */
+.text-center {
+  text-align: center !important;
+  width: 100% !important;
+}
+
+/* Auth Footer Row */
+.contact-form-section .contact-form .auth-form-wrapper .auth-footer-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin-top: 1rem !important;
+  /* Add top margin */
+  margin-bottom: 1.5rem !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.contact-form-section .contact-form .auth-form-wrapper .auth-footer-row.terms {
+  justify-content: flex-start !important;
+}
+
+/* Auth Footer Row */
+#safro-auth-form-container .auth-footer-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+#safro-auth-form-container .auth-footer-row.terms {
+  justify-content: flex-start !important;
+}
