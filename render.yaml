@@ -4,8 +4,8 @@ services:
     name: safro-api-gateway
     runtime: rust
     repo: https://github.com/Alkamal01/Safro
-    rootDir: services/api-gateway
-    buildCommand: cargo build --release
+    rootDir: services
+    buildCommand: cargo build --release --bin api-gateway
     startCommand: ./target/release/api-gateway
     envVars:
       - key: DATABASE_URL
@@ -25,8 +25,8 @@ services:
     name: safro-ai-gateway
     runtime: rust
     repo: https://github.com/Alkamal01/Safro
-    rootDir: services/ai-gateway
-    buildCommand: cargo build --release
+    rootDir: services
+    buildCommand: cargo build --release --bin ai-gateway
     startCommand: ./target/release/ai-gateway
     envVars:
       - key: OPENAI_API_KEY
