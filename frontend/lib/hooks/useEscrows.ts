@@ -56,6 +56,8 @@ export function useEscrows() {
     const createEscrow = async (params: CreateEscrowParams): Promise<CreateEscrowResult> => {
         setError(null);
         try {
+            console.log('useEscrows: Creating escrow with params:', params);
+
             // Convert to Candid format - explicitly map fields to preserve BigInt
             const candidParams = {
                 counterparty_id: params.counterparty_id,
@@ -64,13 +66,22 @@ export function useEscrows() {
                 time_lock_unix: params.time_lock_unix ? [params.time_lock_unix] : [],
             };
 
+            console.log('useEscrows: Candid params:', {
+                ...candidParams,
+                amount_satoshis: candidParams.amount_satoshis.toString(),
+                time_lock_unix: candidParams.time_lock_unix.map(t => t.toString())
+            });
+
             const result = await escrowCanister.createEscrow(candidParams as any);
+
+            console.log('useEscrows: Escrow created, result:', result);
 
             // Optimistically add to list (will be refreshed)
             await fetchEscrows();
 
             return result;
         } catch (err) {
+            console.error('useEscrows: Error creating escrow:', err);
             const message = err instanceof Error ? err.message : 'Failed to create escrow';
             setError(message);
             throw err;

@@ -87,6 +87,13 @@ export default function CreateEscrowPage() {
                 ? BigInt(Date.now() * 1000000 + parseInt(timeLockDays) * 24 * 60 * 60 * 1000000000)
                 : null;
 
+            console.log('Creating escrow with params:', {
+                counterparty: counterpartyPrincipal,
+                amount: amountSatoshis.toString(),
+                currency,
+                timeLock: timeLockUnix?.toString()
+            });
+
             const result = await createEscrow({
                 counterparty_id: Principal.fromText(counterpartyPrincipal),
                 amount_satoshis: amountSatoshis,
@@ -94,10 +101,19 @@ export default function CreateEscrowPage() {
                 time_lock_unix: timeLockUnix,
             });
 
-            setCreatedEscrowId(result.escrow_id);
-            setSuccess(true);
+            console.log('Escrow created successfully:', result);
+
+            if (result && result.escrow_id) {
+                setCreatedEscrowId(result.escrow_id);
+                setSuccess(true);
+            } else {
+                throw new Error('Invalid response from canister - missing escrow_id');
+            }
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to create escrow');
+            console.error('Escrow creation error:', err);
+            const errorMessage = err instanceof Error ? err.message : 'Failed to create escrow';
+            setError(errorMessage);
+            alert(`Error: ${errorMessage}`); // Show alert for mobile debugging
         } finally {
             setIsSubmitting(false);
         }
