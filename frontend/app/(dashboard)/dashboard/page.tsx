@@ -175,12 +175,37 @@ export default function DashboardPage() {
                                     </p>
                                 </div>
                             ) : (
-                                <div>
-                                    <div className={styles.chartPlaceholderIcon}>📊</div>
-                                    <p className={styles.chartPlaceholderText}>Escrow chart coming soon</p>
-                                    <p className={`${styles.chartPlaceholderText} ${styles.statSubtext}`}>
-                                        {escrows.length} escrows tracked
-                                    </p>
+                                <div style={{ padding: '2rem 1rem' }}>
+                                    {/* Simple bar chart showing escrow counts by status */}
+                                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1.5rem', height: '200px', justifyContent: 'center' }}>
+                                        {[
+                                            { label: 'Created', count: stats.total - stats.active - stats.completed - stats.disputed, color: '#3b82f6' },
+                                            { label: 'Active', count: stats.active, color: '#10b981' },
+                                            { label: 'Completed', count: stats.completed, color: '#8b5cf6' },
+                                            { label: 'Disputed', count: stats.disputed, color: '#ef4444' }
+                                        ].map((item) => {
+                                            const maxCount = Math.max(stats.total, 1);
+                                            const height = (item.count / maxCount) * 160;
+                                            return (
+                                                <div key={item.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                                                    <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'white' }}>{item.count}</div>
+                                                    <div
+                                                        style={{
+                                                            width: '60px',
+                                                            height: `${Math.max(height, 20)}px`,
+                                                            backgroundColor: item.color,
+                                                            borderRadius: '8px 8px 0 0',
+                                                            transition: 'height 0.3s ease',
+                                                        }}
+                                                    />
+                                                    <div style={{ fontSize: '0.75rem', color: '#8b92a7' }}>{item.label}</div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <div style={{ textAlign: 'center', marginTop: '1.5rem', color: '#8b92a7', fontSize: '0.875rem' }}>
+                                        Total: {stats.total} escrow{stats.total !== 1 ? 's' : ''}
+                                    </div>
                                 </div>
                             )}
                         </div>
