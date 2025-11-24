@@ -558,7 +558,7 @@ export default function EscrowDetailsPage() {
                                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem 0', borderBottom: '1px solid #2d3748' }}>
                                     <span style={{ color: '#8b92a7' }}>AI Risk Score</span>
                                     <span style={{ color: 'white' }}>
-                                        {escrow.ai_risk_score || 42}/100
+                                        {escrow.ai_risk_score ?? 42}/100
                                     </span>
                                 </div>
                             </div>
