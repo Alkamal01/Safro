@@ -56,10 +56,12 @@ export function useEscrows() {
     const createEscrow = async (params: CreateEscrowParams): Promise<CreateEscrowResult> => {
         setError(null);
         try {
-            // Convert Currency enum to Candid variant format
+            // Convert to Candid format - explicitly map fields to preserve BigInt
             const candidParams = {
-                ...params,
+                counterparty_id: params.counterparty_id,
+                amount_satoshis: params.amount_satoshis,
                 currency: params.currency === 'BTC' ? { BTC: null } : { CkBTC: null },
+                time_lock_unix: params.time_lock_unix ? [params.time_lock_unix] : [],
             };
 
             const result = await escrowCanister.createEscrow(candidParams as any);
