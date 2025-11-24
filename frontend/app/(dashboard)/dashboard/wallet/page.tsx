@@ -19,6 +19,7 @@ import {
     Coins
 } from 'lucide-react';
 import styles from '../dashboard.module.css';
+import { bigIntToNumber, formatBTC } from '@/lib/utils/bigint';
 
 export default function WalletPage() {
     const { isAuthenticated } = useAuth();
@@ -107,8 +108,8 @@ export default function WalletPage() {
         );
     }
 
-    const btcBalance = balance ? Number(balance.btc_balance) / 100000000 : 0;
-    const ckbtcBalance = balance ? Number(balance.ckbtc_balance) / 100000000 : 0;
+    const btcBalance = balance ? bigIntToNumber(balance.btc_balance) / 100000000 : 0;
+    const ckbtcBalance = balance ? bigIntToNumber(balance.ckbtc_balance) / 100000000 : 0;
     const totalBalance = btcBalance + ckbtcBalance;
 
     return (
@@ -471,7 +472,7 @@ export default function WalletPage() {
                                                 {tx.tx_type === 'deposit' ? 'Deposit' : tx.tx_type === 'transfer_in' ? 'Received' : 'Sent'}
                                             </div>
                                             <div style={{ color: '#8b92a7', fontSize: '0.875rem' }}>
-                                                {new Date(Number(tx.created_at) / 1000000).toLocaleString()}
+                                                {new Date(bigIntToNumber(tx.created_at) / 1000000).toLocaleString()}
                                             </div>
                                         </div>
                                     </div>
@@ -480,7 +481,7 @@ export default function WalletPage() {
                                             color: tx.tx_type === 'deposit' || tx.tx_type === 'transfer_in' ? '#10b981' : 'white',
                                             fontWeight: 600
                                         }}>
-                                            {tx.tx_type === 'deposit' || tx.tx_type === 'transfer_in' ? '+' : '-'}{(Number(tx.amount) / 100000000).toFixed(8)} {tx.currency}
+                                            {tx.tx_type === 'deposit' || tx.tx_type === 'transfer_in' ? '+' : '-'}{formatBTC(tx.amount)} {tx.currency}
                                         </div>
                                         <div style={{ color: '#8b92a7', fontSize: '0.875rem' }}>
                                             {tx.status}

@@ -9,6 +9,7 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Wallet as WalletIcon, TrendingUp, ArrowDownToLine, ArrowUpFromLine, RefreshCw, Bitcoin, Sparkles } from 'lucide-react';
 import Loader from '@/components/ui/Loader';
 import styles from './dashboard.module.css';
+import { formatBTC } from '@/lib/utils/bigint';
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -276,7 +277,7 @@ export default function DashboardPage() {
                                             <span style={{ fontSize: '0.75rem', color: '#10b981' }}>{escrow.status}</span>
                                         </div>
                                         <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'white' }}>
-                                            {(Number(escrow.amount_satoshis) / 100000000).toFixed(8)} {escrow.currency}
+                                            {formatBTC(escrow.amount_satoshis)} {escrow.currency}
                                         </div>
                                     </div>
                                 ))}
