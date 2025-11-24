@@ -8,6 +8,7 @@ import { useEscrows } from '@/lib/hooks/useEscrows';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Loader2, Plus, ArrowRight } from 'lucide-react';
 import styles from '../dashboard.module.css';
+import { formatBTC, bigIntToNumber } from '@/lib/utils/bigint';
 
 export default function EscrowPage() {
     const router = useRouter();
@@ -174,7 +175,7 @@ export default function EscrowPage() {
                                                 {escrow.escrow_id}
                                             </div>
                                             <div style={{ fontSize: '0.75rem', color: '#8b92a7' }}>
-                                                {new Date(Number(escrow.created_at) / 1000000).toLocaleDateString()}
+                                                {new Date(bigIntToNumber(escrow.created_at) / 1000000).toLocaleDateString()}
                                             </div>
                                         </div>
                                         <div style={{
@@ -191,7 +192,7 @@ export default function EscrowPage() {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>
                                             <div style={{ fontSize: '1.125rem', fontWeight: 700, color: 'white' }}>
-                                                {(Number(escrow.amount_satoshis) / 100000000).toFixed(8)} {escrow.currency}
+                                                {formatBTC(escrow.amount_satoshis)} {escrow.currency}
                                             </div>
                                             <div style={{ fontSize: '0.75rem', color: '#8b92a7', marginTop: '0.25rem' }}>
                                                 Counterparty: {escrow.counterparty_id.toString().substring(0, 10)}...

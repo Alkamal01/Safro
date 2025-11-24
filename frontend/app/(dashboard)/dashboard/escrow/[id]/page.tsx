@@ -13,13 +13,15 @@ import {
     Copy,
     CheckCircle,
     Clock,
+    AlertCircle,
     AlertTriangle,
     ShieldCheck,
     RefreshCw,
-    ExternalLink,
     Loader2,
-    Lock
+    ExternalLink,
+    Lock,
 } from 'lucide-react';
+import { formatBTC, formatSatoshis, bigIntToNumber } from '@/lib/utils/bigint';
 import styles from '../../dashboard.module.css';
 
 export default function EscrowDetailsPage() {
@@ -194,16 +196,16 @@ export default function EscrowDetailsPage() {
                                 </span>
                             </div>
                             <p style={{ color: '#8b92a7', fontSize: '0.875rem' }}>
-                                Created on {new Date(Number(escrow.created_at) / 1000000).toLocaleString()}
+                                Created on {new Date(bigIntToNumber(escrow.created_at) / 1000000).toLocaleString()}
                             </p>
                         </div>
 
                         <div style={{ textAlign: 'right' }}>
                             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>
-                                {(Number(escrow.amount_satoshis) / 100000000).toFixed(8)} {escrow.currency}
+                                {formatBTC(escrow.amount_satoshis)} {escrow.currency}
                             </div>
                             <div style={{ color: '#8b92a7', fontSize: '0.875rem' }}>
-                                ≈ {(Number(escrow.amount_satoshis)).toLocaleString()} satoshis
+                                ≈ {formatSatoshis(escrow.amount_satoshis)} satoshis
                             </div>
                         </div>
                     </div>
@@ -266,7 +268,7 @@ export default function EscrowDetailsPage() {
                             <div style={{ backgroundColor: '#1a1f26', border: '1px solid #2d3748', borderRadius: '12px', padding: '1.5rem' }}>
                                 <h3 style={{ color: 'white', fontSize: '1.125rem', marginBottom: '1rem' }}>Deposit Funds</h3>
                                 <p style={{ color: '#8b92a7', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-                                    Send exactly <strong>{(Number(escrow.amount_satoshis) / 100000000).toFixed(8)} {escrow.currency}</strong> to the address below to fund this escrow.
+                                    Send exactly <strong>{formatBTC(escrow.amount_satoshis)} {escrow.currency}</strong> to the address below to fund this escrow.
                                 </p>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
@@ -548,7 +550,7 @@ export default function EscrowDetailsPage() {
                                     <span style={{ color: '#8b92a7' }}>Time Lock</span>
                                     <span style={{ color: 'white' }}>
                                         {escrow.time_lock_unix
-                                            ? new Date(Number(escrow.time_lock_unix) / 1000000).toLocaleDateString()
+                                            ? new Date(bigIntToNumber(escrow.time_lock_unix) / 1000000).toLocaleDateString()
                                             : 'None'}
                                     </span>
                                 </div>
