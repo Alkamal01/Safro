@@ -153,12 +153,24 @@ export function useEscrows() {
     };
 
     // Calculate stats
+    const getStatusString = (status: any): string => {
+        if (typeof status === 'string') return status;
+        if (typeof status === 'object' && status !== null) {
+            const keys = Object.keys(status);
+            if (keys.length > 0) return keys[0];
+        }
+        return 'Unknown';
+    };
+
     const stats = {
         total: escrows.length,
-        active: escrows.filter(e => e.status === EscrowStatus.Funded || e.status === EscrowStatus.Created).length,
-        completed: escrows.filter(e => e.status === EscrowStatus.Released).length,
-        disputed: escrows.filter(e => e.status === EscrowStatus.Disputed).length,
-        totalValue: escrows.reduce((sum, e) => sum + Number(e.amount_satoshis), 0),
+        active: escrows.filter(e => {
+            const status = getStatusString(e.status);
+            return status === 'Funded' || status === 'Created';
+        }).length,
+        completed: escrows.filter(e => getStatusString(e.status) === 'Released').length,
+        disputed: escrows.filter(e => getStatusString(e.status) === 'Disputed').length,
+        totalValue: escrows.reduce((sum, e) => sum + Number(e.amount_satoshis.toString()), 0),
     };
 
     return {
