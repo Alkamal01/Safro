@@ -79,6 +79,14 @@ export function useEscrows() {
             // Optimistically add to list (will be refreshed)
             await fetchEscrows();
 
+            // TODO: In production, trigger AI gateway to analyze escrow
+            // For demo: Generate mock AI risk score (remove this in production)
+            if (result.escrow_id) {
+                // Mock AI analysis based on amount (for demo only)
+                const mockRiskScore = Math.min(95, Math.max(15, 50 + Math.floor(Math.random() * 30)));
+                console.log(`Mock AI Risk Score for ${result.escrow_id}: ${mockRiskScore}/100`);
+            }
+
             return result;
         } catch (err) {
             console.error('useEscrows: Error creating escrow:', err);
