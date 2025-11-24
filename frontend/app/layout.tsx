@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -23,9 +24,11 @@ export default function RootLayout({
                 <script dangerouslySetInnerHTML={{ __html: `eruda.init();` }} />
             </head>
             <body className={inter.variable}>
-                <Providers>
-                    {children}
-                </Providers>
+                <ErrorBoundary>
+                    <Providers>
+                        {children}
+                    </Providers>
+                </ErrorBoundary>
             </body>
         </html>
     );
