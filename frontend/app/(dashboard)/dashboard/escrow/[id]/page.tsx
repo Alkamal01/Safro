@@ -55,7 +55,7 @@ export default function EscrowDetailsPage() {
         } finally {
             setIsLoading(false);
         }
-    }, [escrowId, isIcpAuth, getEscrow]);
+    }, [escrowId, isIcpAuth]); // Removed getEscrow from dependencies
 
     useEffect(() => {
         if (!isAuthenticated) {
