@@ -70,6 +70,20 @@ fn create_escrow(params: CreateEscrowParams) -> std::result::Result<CreateEscrow
     let deposit_address = generate_deposit_address(&escrow_id, &params.currency);
     let now = current_timestamp();
     
+    // Mock AI risk score for demo (TODO: Replace with actual AI gateway integration)
+    // Lower amounts = lower risk, higher amounts = higher risk
+    let mock_risk_score = if params.amount_satoshis < 1_000_000 {
+        // < 0.01 BTC
+        25 + (params.amount_satoshis / 50_000) as u8
+    } else if params.amount_satoshis < 10_000_000 {
+        // 0.01 - 0.1 BTC
+        35 + (params.amount_satoshis / 500_000) as u8
+    } else {
+        // > 0.1 BTC
+        55 + (params.amount_satoshis / 5_000_000) as u8
+    };
+    let ai_risk_score = Some(mock_risk_score.min(85)); // Cap at 85 for demo
+    
     let escrow = EscrowRecord {
         escrow_id: escrow_id.clone(),
         creator_id: creator,
@@ -82,7 +96,7 @@ fn create_escrow(params: CreateEscrowParams) -> std::result::Result<CreateEscrow
         time_lock_unix: params.time_lock_unix,
         created_at: now,
         updated_at: now,
-        ai_risk_score: None,
+        ai_risk_score,
         tags: vec![],
         creator_confirmed_delivery: false,
         counterparty_confirmed_delivery: false,
