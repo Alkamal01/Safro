@@ -6,9 +6,9 @@ import { Principal } from '@dfinity/principal';
 
 // Canister IDs - Update these with your deployed canister IDs
 export const CANISTER_IDS = {
-    escrow: process.env.NEXT_PUBLIC_ESCROW_CANISTER_ID || 'rrkah-fqaaa-aaaaa-aaaaq-cai',
-    wallet: process.env.NEXT_PUBLIC_WALLET_CANISTER_ID || 'ryjl3-tyaaa-aaaaa-aaaba-cai',
-    identity: process.env.NEXT_PUBLIC_IDENTITY_CANISTER_ID || 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    escrow: process.env.NEXT_PUBLIC_ESCROW_CANISTER_ID || '3jv2i-tyaaa-aaaae-acxnq-cai', // Mainnet
+    wallet: process.env.NEXT_PUBLIC_WALLET_CANISTER_ID || 'yaku6-4iaaa-aaaab-qacfa-cai', // Playground
+    identity: process.env.NEXT_PUBLIC_IDENTITY_CANISTER_ID || 'yjj7c-kaaaa-aaaab-qaceq-cai', // Playground
 };
 
 // IC Network configuration
