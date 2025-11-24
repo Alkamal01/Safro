@@ -22,7 +22,7 @@ import {
     Lock,
 } from 'lucide-react';
 import { formatBTC, formatSatoshis, bigIntToNumber } from '@/lib/utils/bigint';
-import { statusToString } from '@/lib/utils/candid';
+import { statusToString, currencyToString } from '@/lib/utils/candid';
 import styles from '../../dashboard.module.css';
 
 export default function EscrowDetailsPage() {
@@ -203,7 +203,7 @@ export default function EscrowDetailsPage() {
 
                         <div style={{ textAlign: 'right' }}>
                             <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>
-                                {formatBTC(escrow.amount_satoshis)} {escrow.currency}
+                                {formatBTC(escrow.amount_satoshis)} {currencyToString(escrow.currency)}
                             </div>
                             <div style={{ color: '#8b92a7', fontSize: '0.875rem' }}>
                                 ≈ {formatSatoshis(escrow.amount_satoshis)} satoshis
@@ -269,7 +269,7 @@ export default function EscrowDetailsPage() {
                             <div style={{ backgroundColor: '#1a1f26', border: '1px solid #2d3748', borderRadius: '12px', padding: '1.5rem' }}>
                                 <h3 style={{ color: 'white', fontSize: '1.125rem', marginBottom: '1rem' }}>Deposit Funds</h3>
                                 <p style={{ color: '#8b92a7', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
-                                    Send exactly <strong>{formatBTC(escrow.amount_satoshis)} {escrow.currency}</strong> to the address below to fund this escrow.
+                                    Send exactly <strong>{formatBTC(escrow.amount_satoshis)} {currencyToString(escrow.currency)}</strong> to the address below to fund this escrow.
                                 </p>
 
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
@@ -304,7 +304,7 @@ export default function EscrowDetailsPage() {
                                             </button>
                                         </div>
                                         <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#8b92a7', marginTop: '0.75rem' }}>
-                                            Only send {escrow.currency} to this address.
+                                            Only send {currencyToString(escrow.currency)} to this address.
                                         </p>
                                     </div>
                                 </div>

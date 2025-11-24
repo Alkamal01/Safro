@@ -10,7 +10,7 @@ import { Wallet as WalletIcon, TrendingUp, ArrowDownToLine, ArrowUpFromLine, Ref
 import Loader from '@/components/ui/Loader';
 import styles from './dashboard.module.css';
 import { formatBTC } from '@/lib/utils/bigint';
-import { statusToString } from '@/lib/utils/candid';
+import { statusToString, currencyToString } from '@/lib/utils/candid';
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -278,7 +278,7 @@ export default function DashboardPage() {
                                             <span style={{ fontSize: '0.75rem', color: '#10b981' }}>{statusToString(escrow.status)}</span>
                                         </div>
                                         <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'white' }}>
-                                            {formatBTC(escrow.amount_satoshis)} {escrow.currency}
+                                            {formatBTC(escrow.amount_satoshis)} {currencyToString(escrow.currency)}
                                         </div>
                                     </div>
                                 ))}
