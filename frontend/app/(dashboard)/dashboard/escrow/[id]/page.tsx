@@ -22,6 +22,7 @@ import {
     Lock,
 } from 'lucide-react';
 import { formatBTC, formatSatoshis, bigIntToNumber } from '@/lib/utils/bigint';
+import { statusToString } from '@/lib/utils/candid';
 import styles from '../../dashboard.module.css';
 
 export default function EscrowDetailsPage() {
@@ -192,7 +193,7 @@ export default function EscrowDetailsPage() {
                                     fontWeight: 600,
                                     border: `1px solid ${getStatusColor(escrow.status)}40`
                                 }}>
-                                    {escrow.status}
+                                    {statusToString(escrow.status)}
                                 </span>
                             </div>
                             <p style={{ color: '#8b92a7', fontSize: '0.875rem' }}>

@@ -9,6 +9,7 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Loader2, Plus, ArrowRight } from 'lucide-react';
 import styles from '../dashboard.module.css';
 import { formatBTC, bigIntToNumber } from '@/lib/utils/bigint';
+import { statusToString } from '@/lib/utils/candid';
 
 export default function EscrowPage() {
     const router = useRouter();
@@ -186,7 +187,7 @@ export default function EscrowPage() {
                                             fontSize: '0.75rem',
                                             fontWeight: 600,
                                         }}>
-                                            {escrow.status}
+                                            {statusToString(escrow.status)}
                                         </div>
                                     </div>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
