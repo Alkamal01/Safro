@@ -56,7 +56,13 @@ export function useEscrows() {
     const createEscrow = async (params: CreateEscrowParams): Promise<CreateEscrowResult> => {
         setError(null);
         try {
-            const result = await escrowCanister.createEscrow(params);
+            // Convert Currency enum to Candid variant format
+            const candidParams = {
+                ...params,
+                currency: params.currency === 'BTC' ? { BTC: null } : { CkBTC: null },
+            };
+
+            const result = await escrowCanister.createEscrow(candidParams as any);
 
             // Optimistically add to list (will be refreshed)
             await fetchEscrows();

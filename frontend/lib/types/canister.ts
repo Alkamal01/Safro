@@ -20,7 +20,7 @@ export enum EscrowStatus {
 
 export enum Currency {
     BTC = 'BTC',
-    ckBTC = 'ckBTC',
+    CkBTC = 'CkBTC',
 }
 
 export interface EscrowRecord {

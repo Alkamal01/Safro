@@ -27,7 +27,7 @@ export default function CreateEscrowPage() {
 
     // Form data
     const [counterpartyPrincipal, setCounterpartyPrincipal] = useState('');
-    const [currency, setCurrency] = useState<Currency>(Currency.ckBTC);
+    const [currency, setCurrency] = useState<Currency>(Currency.CkBTC);
     const [amountBtc, setAmountBtc] = useState('');
     const [timeLockDays, setTimeLockDays] = useState('');
     const [useTimeLock, setUseTimeLock] = useState(false);
@@ -315,7 +315,7 @@ export default function CreateEscrowPage() {
                                     Currency *
                                 </label>
                                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
-                                    {[Currency.ckBTC, Currency.BTC].map((curr) => (
+                                    {[Currency.CkBTC, Currency.BTC].map((curr) => (
                                         <button
                                             key={curr}
                                             onClick={() => setCurrency(curr)}
