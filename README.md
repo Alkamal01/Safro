@@ -1,108 +1,99 @@
-# Safro - Decentralized Escrow Platform
+# Safro - AI-Powered Native Bitcoin Escrow
 
-Safro is a Bitcoin escrow platform built on the Internet Computer Protocol (ICP) with AI-powered risk assessment, multi-channel access (web, mobile PWA, USSD), and agent network integration.
+**Safro** is a decentralized escrow platform built on the Internet Computer (ICP) that solves the $2.3B P2P crypto scam problem. By combining **Native Bitcoin** integration, **AI Risk Assessment**, and **USSD** accessibility, Safro brings secure, trustless transactions to the next billion users.
 
-## Architecture
+🚀 **Live Demo:** [https://safroo.vercel.app](https://safroo.vercel.app)  
+📺 **Demo Video:** [Watch on YouTube](https://youtu.be/example) (Replace with actual link)
 
-- **On-chain (ICP Canisters)**: Escrow logic, wallet coordination, reputation, AI orchestration, identity
-- **Off-chain Services**: AI gateway, API gateway, USSD/VAS, notifications, agent management, reconciliation
-- **Client Layer**: Next.js web app + PWA, USSD interface
+## 🌟 Key Features
 
-## Prerequisites
+### 1. Native Bitcoin Escrow (No Bridges)
+- **Direct Integration:** Uses ICP's threshold signatures (Chain Fusion) to hold and release real BTC directly on the Bitcoin network.
+- **Trustless:** No bridges, no wrapped tokens, no centralized custodians.
+- **Low Fees:** Transactions cost pennies compared to traditional escrow services ($500+).
 
-- [DFX](https://internetcomputer.org/docs/current/developer-docs/setup/install) (DFINITY SDK)
-- [Rust](https://rustup.rs/) (with wasm32-unknown-unknown target)
-- [Node.js](https://nodejs.org/) (v18+)
-- [Docker](https://www.docker.com/) and Docker Compose
+### 2. AI-Powered Risk Assessment
+- **Real-Time Analysis:** Every escrow is analyzed by our AI engine for fraud patterns.
+- **Risk Scoring:** Users see a clear 0-100 risk score before funding.
+- **Smart Alerts:** AI flags suspicious amounts, new accounts, or unusual patterns.
 
-## Quick Start
+### 3. Universal Access (USSD)
+- **Feature Phone Support:** Works on any mobile phone via USSD (`*123#`).
+- **No Internet Needed:** Users in emerging markets can create and manage escrows via SMS/USSD.
+- **Inclusive:** Bringing DeFi security to the 2.5 billion people without smartphones.
 
-### 1. Install dependencies
+### 4. On-Chain Reputation
+- **Credit Scores:** Successful transactions build an immutable on-chain credit history.
+- **Trust Identity:** Users can prove their reliability across platforms.
 
-```bash
-# Install Rust wasm target
-rustup target add wasm32-unknown-unknown
+## 🏗 Architecture
 
-# Install Node dependencies
-npm install
-cd frontend && npm install && cd ..
-```
+Safro leverages the full power of the Internet Computer:
 
-### 2. Start local services
+- **Frontend:** Next.js 14 (Hosted on Vercel/ICP)
+- **Canisters (Smart Contracts):**
+  - `escrow`: Core logic, holding BTC, state management
+  - `ai_orchestration`: Stores AI analysis results
+  - `wallet`: Manages user balances and transactions
+- **Integrations:**
+  - **Bitcoin Network:** Native integration via `bitcoin_testnet` / `bitcoin_mainnet`
+  - **Internet Identity:** Secure, privacy-preserving authentication
+  - **OpenAI/Groq:** Off-chain AI analysis via Gateway
 
-```bash
-# Start PostgreSQL, Redis, NATS, Prometheus, Grafana
-npm run dev:services
-```
+## 🚀 Live Deployment (Mainnet)
 
-### 3. Deploy canisters locally
+| Service | Canister ID / URL |
+|---------|-------------------|
+| **Frontend** | [safroo.vercel.app](https://safroo.vercel.app) |
+| **Escrow Canister** | `3jv2i-tyaaa-aaaae-acxnq-cai` |
+| **AI Orchestration** | `3awru-fqaaa-aaaae-acxma-cai` |
+| **Wallet Canister** | `3g7ni-qiaaa-aaaae-acxna-cai` |
 
-```bash
-# Start local ICP replica and deploy canisters
-npm run canister:local
-```
+## 🛠 Local Development
 
-### 4. Start frontend
+### Prerequisites
+- [DFX SDK](https://internetcomputer.org/docs/current/developer-docs/setup/install)
+- Node.js v18+
+- Rust (wasm32 target)
 
-```bash
-npm run dev:frontend
-```
+### Quick Start
 
-The frontend will be available at http://localhost:3000
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/Alkamal01/Safro.git
+   cd Safro
+   ```
 
-## Project Structure
+2. **Install dependencies**
+   ```bash
+   npm install
+   cd frontend && npm install && cd ..
+   ```
 
-```
-Safro/
-├── canisters/          # ICP Rust canisters
-├── services/           # Off-chain Rust services
-├── frontend/           # Next.js application
-├── shared/             # Shared types
-├── database/           # SQL migrations
-├── config/             # Configuration files
-├── scripts/            # Utility scripts
-└── docs/              # Documentation
-```
+3. **Start local replica**
+   ```bash
+   dfx start --background --clean
+   ```
 
-## Development
+4. **Deploy canisters**
+   ```bash
+   # Deploys all canisters and generates declarations
+   dfx deploy
+   ```
 
-### Running Tests
+5. **Run Frontend**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
 
-```bash
-# Rust tests
-cargo test
+## 🏆 Hackathon Tracks
 
-# Frontend tests
-npm run test:frontend
-```
+Safro is built for:
+- **Chain Fusion:** Native Bitcoin integration without bridges.
+- **AI on ICP:** AI-driven risk scoring and fraud detection.
+- **Financial Inclusion:** USSD interface for emerging markets.
 
-### Building for Production
+## 📄 License
 
-```bash
-# Build canisters
-cargo build --release --target wasm32-unknown-unknown
-
-# Build frontend
-npm run build:frontend
-```
-
-## Services
-
-- **Frontend**: http://localhost:3000
-- **Grafana**: http://localhost:3001 (admin/admin)
-- **Prometheus**: http://localhost:9090
-- **PostgreSQL**: localhost:5432
-- **Redis**: localhost:6379
-- **NATS**: localhost:4222
-
-## Documentation
-
-See the `/docs` directory for detailed documentation on:
-- Architecture overview
-- API documentation
-- Deployment guide
-- Development workflows
-
-## License
-
-MIT
+MIT License - Open Source for the World.
