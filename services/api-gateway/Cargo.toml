@@ -22,4 +22,10 @@ sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid"
 chrono = { version = "0.4", features = ["serde"] }
 validator = { version = "0.18", features = ["derive"] }
 sha2 = "0.10"
+redis = { version = "0.24", features = ["tokio-comp", "connection-manager"] }
+reqwest = { version = "0.11", features = ["json"] }
+rand = "0.8"
+anyhow = "1.0"
+thiserror = "1.0"
+async-trait = "0.1"
 
