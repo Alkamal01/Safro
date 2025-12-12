@@ -86,14 +86,3 @@ Safro leverages the full power of the Internet Computer:
    cd frontend
    npm run dev
    ```
-
-## 🏆 Hackathon Tracks
-
-Safro is built for:
-- **Chain Fusion:** Native Bitcoin integration without bridges.
-- **AI on ICP:** AI-driven risk scoring and fraud detection.
-- **Financial Inclusion:** USSD interface for emerging markets.
-
-## 📄 License
-
-MIT License - Open Source for the World.
